@@ -5,13 +5,14 @@ require 'sinatra/reloader'
 require 'sinatra/activerecord'
 
 # => создание подключения к БД
-set :database, "SQLite3:leprosorium.db"
 
-class Post < Activerecord::Base
+class Post < ActiveRecord::Base
+
 end
 
-class Comment < Activerecord::Base
-end
+
+#class Comment < ActiveRecord::Base
+#end
 
 
 
