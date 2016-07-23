@@ -9,6 +9,8 @@ require 'sinatra/activerecord'
 set :database, "SQLite3:leprosoriumhq.db"
 
 class Post < ActiveRecord::Base
+	validates :author, presence: true, length: {in: 3..50}
+	validates :content, presence: true
 end
 
 before do
@@ -18,7 +20,7 @@ end
 # => --------------------------------------
 
 get '/' do
-	erb "<h2>Hello! Here You can read most famous quotations of wise men and fools!</h2>"
+	erb "<h3>Hello! Here You can read most famous quotations of wise men and fools!</h3>"
 end
 
 
@@ -42,8 +44,11 @@ post '/newpost' do
 #					:author => @author)
 
 	@newpost = Post.new params[:post]
-	@newpost.save
-
-	erb "<h3>Your post was added</h3>"
+	if @newpost.save
+		erb "<h3>Your post was added</h3>"
+	else
+		@error = @newpost.errors.full_messages.first
+		erb :newpost
+	end
 
 end
