@@ -13,38 +13,29 @@ class Post < ActiveRecord::Base
 	validates :content, presence: true
 end
 
-
-
-before do
-	@posts = Post.all
+class Comment <ActiveRecord::Base
 end
 
 # => --------------------------------------
 
-get '/' do
+get '/' do				# => стартовая страница
 	erb "<h3>Hello! Here You can read most famous quotations of wise men and fools!</h3>"
 end
 
 
-get '/index' do
+get '/index' do			# => отображение списка всех постов
 	@posts = Post.order('created_at DESC') 
 	erb :index
 end
 
 
-
-get '/newpost' do
+get '/newpost' do		# => вывод формы нового поста
 	@newpost = Post.new
 	erb :newpost
 end
 
 
-post '/newpost' do
-#	@content = params[:content]
-#	@author = params[:author]
-#	Post.create(:content => @content,
-#					:author => @author)
-
+post '/newpost' do		# => получение данных из формы нового поста
 	@newpost = Post.new params[:post]
 	if @newpost.save
 		erb "<h3>Your post was added</h3>"
@@ -53,4 +44,8 @@ post '/newpost' do
 		erb :newpost
 	end
 
+end
+
+get '/details/:post_id' do
+#	post_is = params[post]
 end
