@@ -31,17 +31,14 @@ end
 
 
 post '/newpost' do
-	@content = params[:content]
-	@author = params[:author]
-	Post.create(:content => @content,
-					:author => @author)
+#	@content = params[:content]
+#	@author = params[:author]
+#	Post.create(:content => @content,
+#					:author => @author)
 
-#	@newpost = Post.new params[:post]
-#	@newpost.save
-#	erb "<h3>Your post was saved</h3>"
+	@newpost = Post.new params[:post]
+	@newpost.save
 
-#	erb "#{Post.content}"
-#	erb "#{Post.author}"
 	erb "<h3>Your post was added</h3>"
 
 end
