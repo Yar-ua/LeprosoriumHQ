@@ -18,6 +18,11 @@ end
 # => --------------------------------------
 
 get '/' do
+	erb "<h2>Hello! Here You can read most famous quotations of wise men and fools!</h2>"
+end
+
+
+get '/index' do
 	erb "Hello!"
 	erb :index
 end
