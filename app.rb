@@ -4,7 +4,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'SQLite3'
 require 'sinatra/activerecord'
-
+# => --------------------------------------
 # => создание подключения к БД
 set :database, "SQLite3:leprosoriumhq.db"
 
@@ -12,6 +12,8 @@ class Post < ActiveRecord::Base
 	validates :author, presence: true, length: {in: 3..50}
 	validates :content, presence: true
 end
+
+
 
 before do
 	@posts = Post.all
@@ -25,7 +27,7 @@ end
 
 
 get '/index' do
-	erb "Hello!"
+	@posts = Post.order('created_at DESC') 
 	erb :index
 end
 
