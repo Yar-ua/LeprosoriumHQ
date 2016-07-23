@@ -1,0 +1,12 @@
+<h3>Post details</h3>
+<p>
+	<br/>
+	<h4>	<%= @results['content'] %>	</h4>
+	<br/>
+<h4>Comments</h4>
+
+<% @comments.each do |comment| %>
+	<%= comment.content %> <br/>
+	Author: <%= comment.author %> <br/>
+	<span style="font-size: 75%; color: #999">created at <%= comment.created_at %></span><br/>
+<% end %>

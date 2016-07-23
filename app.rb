@@ -9,11 +9,14 @@ require 'sinatra/activerecord'
 set :database, "SQLite3:leprosoriumhq.db"
 
 class Post < ActiveRecord::Base
+	has_many :comments
+
 	validates :author, presence: true, length: {in: 3..50}
 	validates :content, presence: true
 end
 
 class Comment <ActiveRecord::Base
+	belongs_to :post
 end
 
 # => --------------------------------------
@@ -47,5 +50,9 @@ post '/newpost' do		# => получение данных из формы нов�
 end
 
 get '/details/:post_id' do
-#	post_is = params[post]
+#	comment_num = params[:post_id]
+	@results = Post.find(params[:post_id])
+	@comments = Comment.where("post_id=?", params[:post_id])
+
+	erb :details
 end
