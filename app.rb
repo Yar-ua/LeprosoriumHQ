@@ -9,14 +9,17 @@ require 'sinatra/activerecord'
 set :database, "SQLite3:leprosoriumhq.db"
 
 class Post < ActiveRecord::Base
-	has_many :comments
+#	has_many :comments
 
 	validates :author, presence: true, length: {in: 3..50}
 	validates :content, presence: true
 end
 
 class Comment <ActiveRecord::Base
-	belongs_to :post
+#	belongs_to :post
+
+	validates :content, presence: true
+	validates :author, presence: true, length: {minimum: 3}
 end
 
 # => --------------------------------------
@@ -61,5 +64,6 @@ post '/details/:post_id' do
 	@newcomment = Comment.new params[:comment]
 	@newcomment.post_id = params[:post_id]
 	@newcomment.save
-	erb "Comment added #{@newcomment.post_id}"
+#	erb "Comment added #{@newcomment.post_id}"
+	redirect to ('/details/' + params[:post_id])
 end
