@@ -1,5 +1,13 @@
 <h3>Post details</h3>
 
+
+      <div>
+            <%if @error && @error.length > 0 then %>
+                <div class="alert alert-danger"><%=@error%></div>
+            <% end %>
+      </div>
+         
+
 <form action="/newpost" method="POST" role="form">
   <div class="form-group">
 		<p><br/>

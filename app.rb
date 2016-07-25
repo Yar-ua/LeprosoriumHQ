@@ -9,14 +9,12 @@ require 'sinatra/activerecord'
 set :database, "SQLite3:leprosoriumhq.db"
 
 class Post < ActiveRecord::Base
-#	has_many :comments
 
 	validates :author, presence: true, length: {in: 3..50}
 	validates :content, presence: true
 end
 
 class Comment <ActiveRecord::Base
-#	belongs_to :post
 
 	validates :content, presence: true
 	validates :author, presence: true, length: {minimum: 3}
@@ -55,7 +53,7 @@ end
 
 get '/details/:post_id' do
 	@results = Post.find(params[:post_id])
-	@comments = Comment.where("post_id=?", params[:post_id])
+	@comments = Comment.where("post_id=?", params[:post_id]).order('created_at DESC')
 	erb :details
 end
 
@@ -63,7 +61,11 @@ end
 post '/details/:post_id' do
 	@newcomment = Comment.new params[:comment]
 	@newcomment.post_id = params[:post_id]
-	@newcomment.save
-#	erb "Comment added #{@newcomment.post_id}"
-	redirect to ('/details/' + params[:post_id])
+	
+	if @newcomment.save
+		redirect to ('/details/' + params[:post_id])
+	else
+		@error = @newcomment.errors.full_messages.first
+		redirect to ('/details/' + params[:post_id])
+	end
 end
