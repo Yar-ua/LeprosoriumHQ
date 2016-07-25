@@ -1,12 +1,33 @@
 <h3>Post details</h3>
-<p>
-	<br/>
-	<h4>	<%= @results['content'] %>	</h4>
-	<br/>
-<h4>Comments</h4>
 
+<form action="/newpost" method="POST" role="form">
+  <div class="form-group">
+		<p><br/>
+		<h4><%= @results.content %></h4></p>
+		ID: <%= @results.id %>
+		<br/>
+  </div>
+</form>
+
+<h4>Comments:</h4>
+<hr/>
 <% @comments.each do |comment| %>
-	<%= comment.content %> <br/>
+	<h4><%= comment.content %> </h4>
 	Author: <%= comment.author %> <br/>
 	<span style="font-size: 75%; color: #999">created at <%= comment.created_at %></span><br/>
+	<hr/>
 <% end %>
+
+
+<form action="/details/<%= @results.id %>"  method="POST" role="form">  
+  <div class="form-group">
+ 
+    <label>Add new comment here:</label>
+	<textarea name="comment[content]" type="text" class="form-control" rows="3" placeholder="Input your comment here..." style="width: 40%"></textarea>
+  </div>
+  <div class="form-group">
+    <label>Author</label>
+    <input name="comment[author]" type="text" class="form-control" style="width: 40%" placeholder="Author...">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

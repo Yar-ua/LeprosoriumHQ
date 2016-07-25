@@ -49,10 +49,17 @@ post '/newpost' do		# => получение данных из формы нов�
 
 end
 
+
 get '/details/:post_id' do
-#	comment_num = params[:post_id]
 	@results = Post.find(params[:post_id])
 	@comments = Comment.where("post_id=?", params[:post_id])
-
 	erb :details
+end
+
+
+post '/details/:post_id' do
+	@newcomment = Comment.new params[:comment]
+	@newcomment.post_id = params[:post_id]
+	@newcomment.save
+	erb "Comment added #{@newcomment.post_id}"
 end
